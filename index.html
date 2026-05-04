@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simon Moisy — Technical Director</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f5f2ec;
+    --fg: #1a1714;
+    --muted: #7a746b;
+    --accent: #c0392b;
+    --rule: #d4cfc7;
+    --warm: #f0ebe0;
+    --serif: 'Exo 2', sans-serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+  }
+
+  [data-theme="dark"] {
+    --bg: #151210;
+    --fg: #e8e2d8;
+    --muted: #7a746b;
+    --accent: #e05a4a;
+    --rule: #2e2924;
+    --warm: #1e1a16;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 18px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--serif);
+    line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* ── THEME TOGGLE ── */
+  .theme-bar {
+    position: fixed;
+    top: 1.2rem;
+    right: 1.5rem;
+    z-index: 100;
+    display: flex;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  .theme-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 0;
+    transition: color 0.2s;
+  }
+
+  .theme-bar button:hover,
+  .theme-bar button.active {
+    color: var(--fg);
+  }
+
+  .theme-bar span { opacity: 0.35; }
+
+  /* ── LAYOUT ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5rem 2rem 8rem;
+  }
+
+  section {
+    margin-bottom: 4.5rem;
+  }
+
+  /* ── HEADER ── */
+  .header-location {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 2.2rem;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(3.2rem, 8vw, 5rem);
+    font-weight: 500;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.15em;
+  }
+
+  .tagline {
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--fg);
+    max-width: 520px;
+    margin-top: 1.4rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .tagline em {
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .contact-line {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .contact-line a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-line a:hover { color: var(--accent); }
+
+  /* ── SECTION HEADINGS ── */
+  h2 {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ── WORK ENTRIES ── */
+  .entry {
+    margin-bottom: 3.2rem;
+  }
+
+  .entry-header {
+    margin-bottom: 0.8rem;
+  }
+
+  .entry-title {
+    font-size: 1.18rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .entry-title .client {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .entry-title .client a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+
+  .entry-title .client a:hover { opacity: 1; }
+
+
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+    margin-top: 0.3rem;
+  }
+
+  .entry-meta .sep { opacity: 0.3; }
+
+  .entry-body {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--fg);
+  }
+
+  .entry-body p { margin-bottom: 0.9em; }
+  .entry-body p:last-child { margin-bottom: 0; }
+
+  .entry-body strong {
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  .entry-body em {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── CAPABILITIES GRID ── */
+  .caps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 3rem;
+  }
+
+  .cap-group h3 {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .cap-group p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--fg);
+  }
+
+  /* ── PROFILE PROSE ── */
+  .prose p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.1em;
+    color: var(--fg);
+  }
+
+  .prose p:last-child { margin-bottom: 0; }
+
+  .prose strong {
+    font-weight: 500;
+  }
+
+  /* ── VIDEO EMBEDS ── */
+  .video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.6rem;
+    margin-top: 0.5rem;
+  }
+
+  .video-item {}
+
+  .video-wrap {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    background: var(--warm);
+  }
+
+  .video-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .video-caption {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .video-caption strong {
+    display: block;
+    color: var(--fg);
+    font-weight: 400;
+    margin-bottom: 0.1rem;
+  }
+
+  @media (max-width: 600px) {
+    .video-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── AVAILABILITY ── */
+  .avail-block {
+    background: var(--warm);
+    border-left: 2px solid var(--accent);
+    padding: 1.4rem 1.6rem;
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  footer a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  footer a:hover { color: var(--accent); }
+
+  /* ── NAV TABS ── */
+  .nav-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+    transition: background 0.3s;
+  }
+
+  .nav-tabs a {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .nav-tabs a:hover { color: var(--fg); }
+  .nav-tabs a.active { color: var(--fg); border-bottom-color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .nav-tabs { padding: 0 0.8rem; overflow-x: auto; }
+    .nav-tabs a { padding: 0.65rem 0.6rem; white-space: nowrap; }
+  }
+
+
+  hr.soft {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 2rem 0;
+  }
+
+  @media (max-width: 600px) {
+    main { padding: 3.5rem 1.3rem 6rem; }
+    .caps-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    h1 { font-size: 2.8rem; }
+    .theme-bar { top: 0.8rem; right: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="theme-bar">
+  <button onclick="setTheme('light')" id="btn-light">light</button>
+  <span>/</span>
+  <button onclick="setTheme('dark')" id="btn-dark">dark</button>
+</div>
+
+<nav class="nav-tabs" id="nav-tabs">
+  <a href="#work">Work</a>
+  <a href="#selected-work">Selected Work</a>
+  <a href="#profile">Profile</a>
+  <a href="#how-i-work">How I work</a>
+  <a href="#capabilities">Capabilities</a>
+  <a href="#availability">Availability</a>
+</nav>
+
+<main>
+
+  <!-- ── HEADER ── -->
+  <section id="top">
+    <p class="header-location">Shanghai · Bali · Remote</p>
+    <h1>SIMON MOISY</h1>
+    <p class="tagline">
+      Technical director with 14+ years in real-time 3D, AI-driven interactive systems,
+      and computer vision. Most of the work has been permanent installations and
+      themed entertainment — from Shanghai Disneyland to automotive brand activations —
+      with three separate engagements at Walt Disney Imagineering spanning 2012 to 2025.
+    </p>
+    <div class="contact-line">
+      <a href="mailto:simon@tutanota.com">simon@tutanota.com</a>
+      <a href="https://www.linkedin.com/in/simon-moisy/" target="_blank">linkedin</a>
+      <span>FR · EN</span>
+    </div>
+  </section>
+
+  <!-- ── WORK ── -->
+  <section id="work">
+    <h2>Work</h2>
+
+    <!-- Kagami / Principal -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Principal Technical Director & Systems Architect — <span class="client">Kagami LTD</span></div>
+        <div class="entry-meta">
+          <span>Jan 2018 – present</span>
+          <span class="sep">·</span>
+          <span>Self-employed · APAC</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          Independent technical practice focused on the design and implementation of complex
+          interactive systems. Work spans real-time 3D experience development (primarily Unity),
+          purpose-built backend solutions, and computer vision integration.
+        </p>
+        <p>
+          Projects have consistently sat outside conventional briefs — ranging from large-scale
+          interactive installations to bespoke client tooling — requiring both architectural
+          thinking and hands-on engineering. Focus remains on delivering
+          <strong>production-ready stability for high-stakes environments</strong>, from
+          automotive brand activations to flagship theme park attractions.
+        </p>
+      </div>
+    </div>
+
+    <hr class="soft">
+
+    <!-- Operative Games -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Narrative Systems Architect — <span class="client"><a href="https://www.operativegames.ai/" target="_blank">Operative Games</a></span></div>
+        <div class="entry-meta">
+          <span>Jan 2025 – Sep 2025</span>
+          <span class="sep">·</span>
+          <span>Contract · Remote</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          Designed and engineered a non-linear narrative graph system for a next-generation AI
+          storytelling platform. Work included story decomposition tooling, dynamic state logic
+          tracking event history and unlocking narrative branches in real time, and architecture
+          research at the intersection of AI and interactive narrative.
+        </p>
+        <p>
+          <em>Project under NDA. Platform founded by Jon Snoddy, former VP of R&D at Walt Disney Imagineering.</em>
+        </p>
+      </div>
+    </div>
+
+    <!-- WDI 2025 -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Interactive Systems Engineer — <span class="client">Walt Disney Imagineering</span></div>
+        <div class="entry-meta">
+          <span>Jan 2025 – Apr 2025</span>
+          <span class="sep">·</span>
+          <span>Contract · Shanghai · Third engagement</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          Returned to modernize and maintain interactive attraction software originally
+          architected in 2012–2016 — addressing hardware obsolescence while preserving
+          the live guest experience. <strong>A third engagement with WDI across 13 years.</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- Audi -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Technical Lead, AI Brand Experience — <span class="client">Audi China</span></div>
+        <div class="entry-meta">
+          <span>2024 – Sep 2024</span>
+          <span class="sep">·</span>
+          <span>Contract · Shanghai · Remote</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          Embedded with Red Rabbit Animation as technical lead on a brand experience for
+          Audi's new OLED lighting system, showcased at the Beijing Auto Show. Architected
+          the Python backend, customized an LLM using RAG and Ollama, and handled all
+          networking between backend and TouchDesigner frontend.
+        </p>
+      </div>
+    </div>
+
+    <!-- Forvia -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Technical Lead, AI Interaction Systems — <span class="client">FORVIA</span></div>
+        <div class="entry-meta">
+          <span>Jan 2024 – Jul 2024</span>
+          <span class="sep">·</span>
+          <span>Contract · Shanghai · Hybrid</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          Led a 3-person team to architect and deliver an AI-driven in-car copilot prototype —
+          a real-time audio/video system capable of conversing naturally with passengers while
+          controlling cabin functions (temperature, music, seating, scent). Built on a
+          <strong>local multimodal LLM stack with ElevenLabs and FasterWhisper</strong>.
+          Deployed for live testing at Forvia's Shanghai office.
+        </p>
+      </div>
+    </div>
+
+    <!-- Bolder Games -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Lead Software Engineer, Real-Time Systems — <span class="client">Bolder Games</span></div>
+        <div class="entry-meta">
+          <span>Jan 2022 – Sep 2024</span>
+          <span class="sep">·</span>
+          <span>Contract · Remote</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          Lead software engineer on Nexus Engine — a proprietary real-time animation and AI
+          interaction framework built from scratch for an interactive storytelling platform.
+          Pure engine and tooling architecture: procedural animation systems, speech synthesis
+          integration, and real-time AI behavior systems.
+          <em>Not a game — a technical foundation for AI-driven narrative experiences.</em>
+        </p>
+      </div>
+    </div>
+
+    <!-- Moria -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Co-Founder & Technical Director — <span class="client">Moria</span></div>
+        <div class="entry-meta">
+          <span>Jan 2020 – Jan 2022</span>
+          <span class="sep">·</span>
+          <span>Self-employed · Shanghai</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          Co-founded an educational mixed reality startup using HoloLens 2 and VR headsets
+          combined with memory techniques to teach English to children. Led all technical
+          decisions across hardware and software, implemented the MVP using MRTK and
+          Azure Spatial Anchors, and drove core feature development.
+        </p>
+      </div>
+    </div>
+
+    <!-- Porsche -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Technical Lead, Interactive Brand Experience — <span class="client">Porsche (China) Motors Ltd</span></div>
+        <div class="entry-meta">
+          <span>2020 – 2021</span>
+          <span class="sep">·</span>
+          <span>Contract · Shanghai · Hybrid</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          Embedded with Red Rabbit Animation as networking and systems engineer on a
+          Unity-based brand experience for the Porsche Taycan. Architected an
+          <strong>8-machine synchronized system</strong> with Cinemachine-driven camera
+          motion, seamless transitions between automated and user-controlled camera modes,
+          and a Blazor backend for Porsche option management.
+        </p>
+      </div>
+    </div>
+
+    <!-- Sokaris -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Co-Founder & Technical Director — <span class="client">Sokaris Inc.</span></div>
+        <div class="entry-meta">
+          <span>Jan 2016 – Jan 2023</span>
+          <span class="sep">·</span>
+          <span>Contract · Shanghai</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          Co-founded and led the technical direction of an interdisciplinary design studio
+          in Shanghai, creating immersive physical-digital installations for the premium
+          Chinese market. Work spanned projection mapping on architectural surfaces,
+          spatial interactive environments, and real-time generative art for brand and
+          cultural clients.
+        </p>
+      </div>
+    </div>
+
+    <!-- WDI 2018 -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Software Engineer, Interactive Attractions — <span class="client">Walt Disney Imagineering</span></div>
+        <div class="entry-meta">
+          <span>Sep 2018 – Oct 2019</span>
+          <span class="sep">·</span>
+          <span>Full-time · Shanghai · Second engagement</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          On-site software engineer at Shanghai Disneyland — programming animatronics for
+          future attractions, designing and developing Unity3D control interfaces, and
+          overseeing cybersecurity for resort attractions.
+        </p>
+      </div>
+    </div>
+
+    <!-- WDI 2012 -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Lead Developer, Interactive Attractions — <span class="client">Walt Disney Imagineering</span></div>
+        <div class="entry-meta">
+          <span>2012 – 2016</span>
+          <span class="sep">·</span>
+          <span>Contract · Toulouse / LA / Shanghai · First engagement</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          Lead developer (Unity3D + computer vision) on five interactive attractions for
+          the Shanghai Disney Castle Walkthrough experience — <em>Once Upon A Time</em> —
+          from early prototyping through grand opening deployment. Built all Unity3D scenes,
+          a gesture recognition system in C++/C#, and the network layer synchronizing all
+          system components.
+        </p>
+        <p>
+          Additional WDI projects included the Disney Open House 2014 Dinner Experience
+          under Jon Snoddy, and R&D on a Sugar Rush mixed reality project.
+        </p>
+      </div>
+    </div>
+
+    <!-- Virtual-IT -->
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-title">Junior → Lead Developer — <span class="client">Virtual-IT</span></div>
+        <div class="entry-meta">
+          <span>2008 – 2010</span>
+          <span class="sep">·</span>
+          <span>Part-time · Toulouse, France</span>
+        </div>
+      </div>
+      <div class="entry-body">
+        <p>
+          Where it started. Discovered real-time 3D programming — Papervision3D, Ogre,
+          Unity3D — and computer vision during two internships and a part-time role at a
+          Toulouse-based interactive studio. Designed a middleware simplifying application
+          development on tactile screens and surfaces, and supervised a 4-student team
+          building applications on top of it.
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="selected-work">
+    <h2>Selected Work</h2>
+    <div class="video-grid">
+
+      <div class="video-item">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/CEDm0srHJXs" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <strong>Porsche Fitting Lounge</strong>
+          Real-time interactive configurator — Unity3D, AI-driven personalisation, dealership installation
+        </div>
+      </div>
+
+      <div class="video-item">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/H_5k-Q-g8qk" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <strong>Shanghai Disneyland — Enchanted Storybook Castle</strong>
+          Real-time interactive experience inside the castle — Walt Disney Imagineering, 2012–2016
+        </div>
+      </div>
+
+      <div class="video-item">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/PZvVNrr0KN8" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <strong>Tourism Australia & China Airlines Showroom</strong>
+          Interactive showroom installation — Sokaris Interactive, 2017
+        </div>
+      </div>
+
+      <div class="video-item">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/NTWLQw6Y5yc" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-caption">
+          <strong>Lulucube</strong>
+          Top-down Kinect V1 interactive game — computer vision for real-time person location detection, Unity3D
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── PROFILE ── -->
+  <section id="profile">
+    <h2>Profile</h2>
+    <div class="prose">
+      <p>
+        Freelance technical director based between Bali and Shanghai, working across
+        real-time 3D, AI interaction systems, and computer vision since 2008.
+        Most projects have been permanent or long-running installations — theme park
+        attractions, brand experiences, and interactive environments for the Chinese market.
+      </p>
+      <p>
+        Three contracts with Walt Disney Imagineering between 2012 and 2025, covering
+        the full lifecycle of Shanghai Disneyland's castle walkthrough from prototyping
+        to grand opening to hardware modernisation thirteen years later.
+        Other recurring clients have included automotive brands (Porsche, Audi),
+        an AI narrative platform, and a proprietary real-time engine for interactive storytelling.
+      </p>
+      <p>
+        Earlier: co-founded Sokaris Inc. in Shanghai, an interdisciplinary studio making
+        physical-digital installations for brand and cultural clients, and Moria,
+        a mixed reality education startup using HoloLens 2.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── HOW I WORK ── -->
+  <section id="how-i-work">
+    <h2>How I work</h2>
+    <div class="prose">
+      <p>
+        Most engagements start with an incomplete brief — a creative direction
+        without a defined technical path. The first step is usually figuring out
+        what the system actually needs to be: hardware constraints, latency budgets,
+        failure handling, data flow between components. Architecture decisions made
+        early tend to be the ones that are hardest to reverse later.
+      </p>
+      <p>
+        Work is typically contract-based and embedded within a studio or agency team.
+        Scope ranges from full-stack ownership — backend, real-time runtime,
+        computer vision, deployment — to focused engagements on a specific layer.
+        Most projects involve some combination of Unity3D, Python, and a computer
+        vision or AI pipeline.
+      </p>
+      <p>
+        Available for on-site periods in Shanghai and remote from Bali.
+        Open to projects in themed entertainment, brand experience,
+        AI interaction, and architectural visualisation.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── CAPABILITIES ── -->
+  <section id="capabilities">
+    <h2>Capabilities</h2>
+    <div class="caps-grid">
+
+      <div class="cap-group">
+        <h3>Real-Time 3D</h3>
+        <p>Unity3D · Unreal Engine · TouchDesigner · GLSL · Shader authoring · Real-time rendering pipelines</p>
+      </div>
+
+      <div class="cap-group">
+        <h3>AI & LLM Systems</h3>
+        <p>Ollama · LLM/RAG pipeline design · ElevenLabs · FasterWhisper · Multi-agent architectures · Prompt engineering</p>
+      </div>
+
+      <div class="cap-group">
+        <h3>Computer Vision</h3>
+        <p>OpenCV · Body &amp; gesture tracking · Camera-based interaction · Audience detection · Lighting-robust calibration</p>
+      </div>
+
+      <div class="cap-group">
+        <h3>Languages & Tooling</h3>
+        <p>Python · C# · HLSL/GLSL · Bash · REST API integration · Git · Pipeline automation</p>
+      </div>
+
+      <div class="cap-group">
+        <h3>Systems Architecture</h3>
+        <p>End-to-end stack design · Hardware–software integration · Latency optimisation · Failure mode planning · Handover documentation</p>
+      </div>
+
+      <div class="cap-group">
+        <h3>Domain Experience</h3>
+        <p>Themed entertainment · Permanent museum installations · Architectural visualisation · Brand activations · AI-driven interactive characters</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── AVAILABILITY ── -->
+  <section id="availability">
+    <h2>Availability</h2>
+    <div class="avail-block">
+      Available for freelance engagements as embedded technical director — 
+      permanent installations, AI-driven interactive experiences, and architectural visualisation. 
+      Open to studios and agencies in need of technical ownership for projects at 
+      the intersection of real-time 3D, AI, and physical space. 
+      Based in Bali; available to travel for production periods.
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span>Simon Moisy</span>
+    <a href="mailto:simon@tutanota.com">simon@tutanota.com</a>
+  </footer>
+
+</main>
+
+<script>
+  function setTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem('theme', t);
+    document.getElementById('btn-light').classList.toggle('active', t === 'light');
+    document.getElementById('btn-dark').classList.toggle('active', t === 'dark');
+  }
+
+  // Scroll spy
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-tabs a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.nav-tabs a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+
+  const saved = localStorage.getItem('theme') || 
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  setTheme(saved);
+</script>
+
+</body>
+</html>
