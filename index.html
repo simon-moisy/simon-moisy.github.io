@@ -850,14 +850,19 @@
 
   function updateActiveTab() {
     const navHeight = document.getElementById('nav-tabs').offsetHeight;
-    const marker = window.scrollY + navHeight + 1;
+    const bottomGap = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
+    const marker = window.scrollY + navHeight + (window.innerHeight * 0.35);
     let current = sections[0];
 
-    sections.forEach(section => {
-      if (section.offsetTop <= marker) {
-        current = section;
-      }
-    });
+    if (bottomGap <= 2) {
+      current = sections[sections.length - 1];
+    } else {
+      sections.forEach(section => {
+        if (section.offsetTop <= marker) {
+          current = section;
+        }
+      });
+    }
 
     navLinks.forEach(a => a.classList.remove('active'));
     const active = document.querySelector(`.nav-tabs a[href="#${current.id}"]`);
