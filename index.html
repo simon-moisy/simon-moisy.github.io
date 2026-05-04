@@ -848,17 +848,25 @@
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-tabs a');
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(a => a.classList.remove('active'));
-        const active = document.querySelector(`.nav-tabs a[href="#${entry.target.id}"]`);
-        if (active) active.classList.add('active');
+  function updateActiveTab() {
+    const navHeight = document.getElementById('nav-tabs').offsetHeight;
+    const marker = window.scrollY + navHeight + 1;
+    let current = sections[0];
+
+    sections.forEach(section => {
+      if (section.offsetTop <= marker) {
+        current = section;
       }
     });
-  }, { rootMargin: '-30% 0px -60% 0px' });
 
-  sections.forEach(s => observer.observe(s));
+    navLinks.forEach(a => a.classList.remove('active'));
+    const active = document.querySelector(`.nav-tabs a[href="#${current.id}"]`);
+    if (active) active.classList.add('active');
+  }
+
+  updateActiveTab();
+  window.addEventListener('scroll', updateActiveTab, { passive: true });
+  window.addEventListener('resize', updateActiveTab);
 
 
   const saved = localStorage.getItem('theme') || 
