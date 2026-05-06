@@ -86,6 +86,7 @@
 
   section {
     margin-bottom: 4.5rem;
+    scroll-margin-top: 3.5rem;
   }
 
   /* ── HEADER ── */
@@ -368,9 +369,19 @@
   .nav-tabs a:hover { color: var(--fg); }
   .nav-tabs a.active { color: var(--fg); border-bottom-color: var(--accent); }
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     .nav-tabs { padding: 0 0.8rem; overflow-x: auto; }
     .nav-tabs a { padding: 0.65rem 0.6rem; white-space: nowrap; }
+    .theme-bar {
+      position: static;
+      right: auto;
+      width: 100%;
+      justify-content: flex-start;
+      background: var(--bg);
+      padding: 0.65rem 1rem 0.45rem;
+      transition: background 0.3s;
+    }
+    .nav-tabs { top: 0; }
   }
 
 
@@ -381,10 +392,10 @@
   }
 
   @media (max-width: 600px) {
-    main { padding: 3.5rem 1.3rem 6rem; }
+    main { padding: 2.2rem 1.3rem 6rem; }
+    section { scroll-margin-top: 3.5rem; }
     .caps-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     h1 { font-size: 2.8rem; }
-    .theme-bar { top: 0.8rem; right: 1rem; }
   }
 </style>
 </head>
@@ -415,7 +426,8 @@
       Technical director with 14+ years in real-time 3D, AI-driven interactive systems,
       and computer vision. Most of the work has been permanent installations and
       themed entertainment — from Shanghai Disneyland to automotive brand activations —
-      with three separate engagements at Walt Disney Imagineering spanning 2012 to 2025.
+      with recurring Walt Disney Imagineering collaborations in Shanghai and Glendale
+      spanning 2012 to 2025.
     </p>
     <div class="contact-line">
       <a href="mailto:simon@tutanota.com">simon@tutanota.com</a>
@@ -735,9 +747,10 @@
         attractions, brand experiences, and interactive environments for the Chinese market.
       </p>
       <p>
-        Three contracts with Walt Disney Imagineering between 2012 and 2025, covering
-        the full lifecycle of Shanghai Disneyland's castle walkthrough from prototyping
-        to grand opening to hardware modernisation thirteen years later.
+        Multiple Walt Disney Imagineering collaborations between 2012 and 2025, including
+        three WDI Shanghai engagements covering the full lifecycle of Shanghai Disneyland's
+        castle walkthrough from prototyping to grand opening to hardware modernisation
+        thirteen years later, plus WDI Glendale Open House and internal projects.
         Other recurring clients have included automotive brands (Porsche, Audi),
         an AI narrative platform, and a proprietary real-time engine for interactive storytelling.
       </p>
@@ -847,8 +860,9 @@
 
   function updateActiveTab() {
     const navHeight = document.getElementById('nav-tabs').offsetHeight;
+    const themeHeight = document.querySelector('.theme-bar').offsetHeight;
     const bottomGap = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
-    const marker = window.scrollY + navHeight + (window.innerHeight * 0.35);
+    const marker = window.scrollY + navHeight + themeHeight + (window.innerHeight * 0.35);
     let current = sections[0];
 
     if (bottomGap <= 2) {
