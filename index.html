@@ -255,6 +255,62 @@
     font-weight: 500;
   }
 
+  /* ── PROJECT CARDS (text-only, NDA) ── */
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .project-card {
+    background: var(--warm);
+    border-left: 2px solid var(--muted);
+    padding: 1.2rem 1.4rem;
+  }
+
+  .project-card h3 {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+  }
+
+  .project-card .project-meta {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .project-card p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--fg);
+    margin-bottom: 0.6rem;
+  }
+
+  .project-card .project-tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .project-card .project-tags li {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    background: var(--bg);
+    padding: 0.18rem 0.5rem;
+    border: 1px solid var(--rule);
+  }
+
   /* ── VIDEO EMBEDS ── */
   .video-grid {
     display: grid;
@@ -290,6 +346,34 @@
     border: none;
   }
 
+  .video-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: var(--muted);
+    background: var(--warm);
+  }
+
+  .video-placeholder-inner {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .video-placeholder::before {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 48px;
+    border: 2px dashed var(--rule);
+    margin-bottom: 0.8rem;
+    opacity: 0.5;
+  }
+
   .video-caption {
     font-family: var(--mono);
     font-size: 0.6rem;
@@ -317,6 +401,22 @@
     padding: 1.4rem 1.6rem;
     font-size: 0.95rem;
     line-height: 1.75;
+  }
+
+  /* ── CLIENT LIST ── */
+  .client-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .client-list span {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--fg);
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--rule);
   }
 
   /* ── FOOTER ── */
@@ -410,6 +510,7 @@
 <nav class="nav-tabs" id="nav-tabs">
   <a href="#work">Work</a>
   <a href="#selected-work">Selected Work</a>
+  <a href="#clients">Clients</a>
   <a href="#profile">Profile</a>
   <a href="#how-i-work">How I work</a>
   <a href="#capabilities">Capabilities</a>
@@ -711,6 +812,65 @@
       material, the descriptions focus on my role, the technical challenges, and the
       production context I was responsible for.
     </div>
+
+    <!-- ── PROJECT NOTES (text-only, NDA) ── -->
+    <div class="project-list">
+
+      <div class="project-card">
+        <div class="project-card-body">
+          <h3>Disney Castle Walkthrough — Interactive Attraction Systems</h3>
+          <div class="project-meta">Walt Disney Imagineering · 2012–2016</div>
+          <p>
+            Lead developer on five interactive attractions inside the Shanghai Disneyland
+            castle walkthrough — the resort's first major permanent installation of
+            real-time interactive guest experiences. Built Unity3D scenes, gesture
+            recognition pipeline, and the network layer synchronizing all components.
+            System has been serving thousands of guests daily since opening.
+          </p>
+          <ul class="project-tags">
+            <li>Unity3D</li><li>Computer Vision</li><li>C++ / C#</li>
+            <li>Gesture Recognition</li><li>Multi-system Sync</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-body">
+          <h3>Forvia AI In-Car Copilot — Multimodal Experience</h3>
+          <div class="project-meta">FORVIA · 2024</div>
+          <p>
+            Technical lead for a 3-person team delivering an AI-driven in-car copilot
+            prototype — real-time audio/video conversational system controlling cabin
+            functions (temperature, music, seating, scent). Local multimodal LLM stack
+            with ElevenLabs TTS and FasterWhisper for low-latency voice processing.
+            Deployed for live testing at Forvia Shanghai.
+          </p>
+          <ul class="project-tags">
+            <li>LLM/RAG Pipeline</li><li>ElevenLabs</li><li>FasterWhisper</li>
+            <li>Python</li><li>Real-time Audio</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-body">
+          <h3>Disney Open House Dinner Experience — R&D</h3>
+          <div class="project-meta">Walt Disney Imagineering (Glendale) · 2014</div>
+          <p>
+            Interactive dining experience under Jon Snoddy (former VP R&D, WDI) exploring
+            real-time projection mapping and spatial audio for a curated guest experience.
+            R&D on a Sugar Rush mixed reality project for in-park deployment.
+          </p>
+          <ul class="project-tags">
+            <li>Projection Mapping</li><li>Real-time Systems</li><li>R&D</li>
+            <li>Mixed Reality</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── VIDEO GRID ── -->
     <div class="video-grid">
 
       <div class="video-item">
@@ -719,7 +879,7 @@
         </div>
         <div class="video-caption">
           <strong>Porsche Fitting Lounge</strong>
-          Real-time interactive configurator — Unity3D, AI-driven personalisation, dealership installation
+          Real-time interactive configurator — Unity3D, AI-driven personalisation, 8-machine dealership installation
         </div>
       </div>
 
@@ -729,10 +889,45 @@
         </div>
         <div class="video-caption">
           <strong>Shanghai Disneyland — Enchanted Storybook Castle</strong>
-          Real-time interactive experience inside the castle — Walt Disney Imagineering, 2012–2016
+          Five interactive attractions — Walt Disney Imagineering, 2012–2016
         </div>
       </div>
 
+      <div class="video-item">
+        <div class="video-wrap video-placeholder">
+          <div class="video-placeholder-inner">Video available on request</div>
+        </div>
+        <div class="video-caption">
+          <strong>Sokaris Inc. — Immersive Installations</strong>
+          Projection mapping, spatial environments — Shanghai, 2016–2023
+        </div>
+      </div>
+
+      <div class="video-item">
+        <div class="video-wrap video-placeholder">
+          <div class="video-placeholder-inner">Video available on request</div>
+        </div>
+        <div class="video-caption">
+          <strong>Audi China — AI Brand Experience</strong>
+          Real-time LLM-driven product experience — Beijing Auto Show, 2024
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CLIENTS ── -->
+  <section id="clients">
+    <h2>Clients &amp; Collaborators</h2>
+    <div class="client-list">
+      <span>Walt Disney Imagineering</span>
+      <span>Porsche</span>
+      <span>Audi</span>
+      <span>FORVIA</span>
+      <span>Operative Games</span>
+      <span>Bolder Games</span>
+      <span>Sokaris Inc.</span>
+      <span>Red Rabbit Animation</span>
     </div>
   </section>
 
