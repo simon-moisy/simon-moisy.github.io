@@ -38,13 +38,36 @@ END = "/* analytics:end */"
 
 SNIPPET = f"""
   {BEGIN}
-  // Appended post-swap: the authored <head> no longer exists by this point.
-  var __umami = document.createElement('script');
-  __umami.defer = true;
-  __umami.src = 'https://cloud.umami.is/script.js';
-  __umami.setAttribute('data-website-id', '{WEBSITE_ID}');
-  __umami.setAttribute('data-domains', '{DOMAIN}');
-  (document.head || document.documentElement).appendChild(__umami);
+  // Runs post-swap: the authored <head> no longer exists by this point.
+  //
+  // The pageview is POSTed directly rather than by loading Umami's script.js.
+  // A blocked script tag fires a resource `error` event, and the error sink at
+  // the top of this handler listens with capture:true — so on any visitor
+  // running an ad blocker (cloud.umami.is is on the standard lists) a tracker
+  // tag paints "[bundle] error" across the bottom of the page. Capture runs
+  // window-to-target, so an onerror on the tag itself fires too late to stop
+  // it. A rejected fetch raises no error event at all, and is caught here.
+  if (location.hostname === '{DOMAIN}') {{
+    try {{
+      fetch('https://gateway.umami.is/api/send', {{
+        method: 'POST',
+        headers: {{ 'Content-Type': 'application/json' }},
+        keepalive: true,
+        body: JSON.stringify({{
+          type: 'event',
+          payload: {{
+            website: '{WEBSITE_ID}',
+            hostname: location.hostname,
+            url: location.pathname + location.search,
+            referrer: document.referrer,
+            title: document.title,
+            language: navigator.language,
+            screen: screen.width + 'x' + screen.height
+          }}
+        }})
+      }}).catch(function () {{}});
+    }} catch (e) {{}}
+  }}
   {END}
 """
 
