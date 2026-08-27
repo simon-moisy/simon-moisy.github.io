@@ -168,6 +168,16 @@ document.addEventListener('DOMContentLoaded', async function() {
     setStatus('Error unpacking: ' + err.message);
     console.error('Bundle unpack error:', err);
   }
+
+  /* analytics:begin */
+  // Appended post-swap: the authored <head> no longer exists by this point.
+  var __umami = document.createElement('script');
+  __umami.defer = true;
+  __umami.src = 'https://cloud.umami.is/script.js';
+  __umami.setAttribute('data-website-id', '2aecdaeb-50d5-4328-abe3-cd4d9ed921a1');
+  __umami.setAttribute('data-domains', 'simon-moisy.github.io');
+  (document.head || document.documentElement).appendChild(__umami);
+  /* analytics:end */
 });
 
   </script>
